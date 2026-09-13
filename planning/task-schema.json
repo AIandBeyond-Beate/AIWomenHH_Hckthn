@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ankommende.example/schemas/task-catalog.schema.json",
+  "title": "AnkommenDE task catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["catalogVersion", "checkedAt", "jurisdiction", "demoProfiles", "tasks"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "catalogVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "checkedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "jurisdiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["countryCode", "stateCode", "municipalityName", "scopeLabel", "excludedAreas"],
+      "properties": {
+        "countryCode": { "const": "DE" },
+        "stateCode": { "const": "NI" },
+        "municipalityName": { "const": "Landeshauptstadt Hannover" },
+        "scopeLabel": { "$ref": "#/$defs/localizedText" },
+        "excludedAreas": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "demoProfiles": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/$defs/demoProfile" }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 6,
+      "items": { "$ref": "#/$defs/task" }
+    }
+  },
+  "$defs": {
+    "localizedText": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en"],
+      "properties": {
+        "en": { "type": "string", "minLength": 1 },
+        "de": { "type": "string", "minLength": 1 }
+      }
+    },
+    "demoProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "citizenshipGroup", "purpose", "movedIn", "moveInDate"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "citizenshipGroup": {
+          "enum": ["eu_eea_ch", "non_eu"]
+        },
+        "purpose": {
+          "enum": ["study", "work"]
+        },
+        "movedIn": { "type": "boolean" },
+        "moveInDate": {
+          "type": ["string", "null"],
+          "format": "date"
+        }
+      }
+    },
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["citizenshipGroups", "purposes"],
+      "properties": {
+        "citizenshipGroups": {
+          "type": "array",
+          "items": { "enum": ["eu_eea_ch", "non_eu"] },
+          "uniqueItems": true
+        },
+        "purposes": {
+          "type": "array",
+          "items": { "enum": ["study", "work"] },
+          "uniqueItems": true
+        }
+      }
+    },
+    "dueRule": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "field", "days"],
+          "properties": {
+            "type": { "const": "days_after" },
+            "field": { "const": "moveInDate" },
+            "days": { "type": "integer", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "text"],
+          "properties": {
+            "type": { "const": "text_only" },
+            "text": { "$ref": "#/$defs/localizedText" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type"],
+          "properties": {
+            "type": { "const": "none" }
+          }
+        }
+      ]
+    },
+    "readiness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "blockedLabel"],
+      "properties": {
+        "type": {
+          "enum": ["always", "after_move_in", "after_task"]
+        },
+        "taskId": { "type": "string" },
+        "dependencyMode": {
+          "enum": ["hard", "advisory"]
+        },
+        "blockedLabel": { "$ref": "#/$defs/localizedText" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "publisher", "url", "checkedAt"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "checkedAt": { "type": "string", "format": "date" }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "order",
+        "phase",
+        "priority",
+        "title",
+        "summary",
+        "audience",
+        "readiness",
+        "dueRule",
+        "documents",
+        "steps",
+        "completionCriterion",
+        "sources",
+        "contentStatus"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "order": { "type": "integer", "minimum": 1 },
+        "phase": {
+          "enum": ["before_move", "first_14_days", "first_90_days"]
+        },
+        "priority": {
+          "enum": ["required", "recommended", "informational"]
+        },
+        "title": { "$ref": "#/$defs/localizedText" },
+        "summary": { "$ref": "#/$defs/localizedText" },
+        "audience": { "$ref": "#/$defs/audience" },
+        "readiness": { "$ref": "#/$defs/readiness" },
+        "dueRule": { "$ref": "#/$defs/dueRule" },
+        "documents": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/localizedText" }
+        },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/localizedText" }
+        },
+        "completionCriterion": { "$ref": "#/$defs/localizedText" },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "description", "actionLabel", "url"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+              "title": { "$ref": "#/$defs/localizedText" },
+              "description": { "$ref": "#/$defs/localizedText" },
+              "actionLabel": { "$ref": "#/$defs/localizedText" },
+              "url": { "type": "string", "format": "uri", "pattern": "^https://" }
+            }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/source" }
+        },
+        "contentStatus": {
+          "enum": ["draft", "human_reviewed"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,394 @@
+{
+  "$schema": "./task-schema.json",
+  "catalogVersion": "0.1.0",
+  "checkedAt": "2026-09-12",
+  "jurisdiction": {
+    "countryCode": "DE",
+    "stateCode": "NI",
+    "municipalityName": "Landeshauptstadt Hannover",
+    "scopeLabel": {
+      "en": "City of Hannover",
+      "de": "Landeshauptstadt Hannover"
+    },
+    "excludedAreas": [
+      "Garbsen",
+      "Laatzen",
+      "Langenhagen"
+    ]
+  },
+  "demoProfiles": [
+    {
+      "id": "maya_student",
+      "displayName": "Maya",
+      "citizenshipGroup": "non_eu",
+      "purpose": "study",
+      "movedIn": true,
+      "moveInDate": "2026-09-10"
+    },
+    {
+      "id": "sofia_professional",
+      "displayName": "Sofia",
+      "citizenshipGroup": "eu_eea_ch",
+      "purpose": "work",
+      "movedIn": true,
+      "moveInDate": "2026-09-10"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "register_address",
+      "order": 1,
+      "phase": "first_14_days",
+      "priority": "required",
+      "title": {
+        "en": "Register your address",
+        "de": "Wohnsitz anmelden"
+      },
+      "summary": {
+        "en": "Register after moving in and receive your registration confirmation.",
+        "de": "Melde dich nach dem Einzug an und erhalte deine Meldebestätigung."
+      },
+      "audience": {
+        "citizenshipGroups": ["eu_eea_ch", "non_eu"],
+        "purposes": ["study", "work"]
+      },
+      "readiness": {
+        "type": "after_move_in",
+        "dependencyMode": "hard",
+        "blockedLabel": {
+          "en": "Prepare now; complete after moving in",
+          "de": "Jetzt vorbereiten; nach dem Einzug erledigen"
+        }
+      },
+      "dueRule": {
+        "type": "days_after",
+        "field": "moveInDate",
+        "days": 14
+      },
+      "documents": [
+        {
+          "en": "Passport or ID for you and each family member",
+          "de": "Reisepass oder Ausweis für dich und jedes Familienmitglied"
+        },
+        {
+          "en": "Wohnungsgeberbestätigung",
+          "de": "Wohnungsgeberbestätigung"
+        },
+        {
+          "en": "Civil-status documents, if applicable",
+          "de": "Personenstandsurkunden, falls zutreffend"
+        }
+      ],
+      "steps": [
+        {
+          "en": "Check whether you meet the requirements for electronic registration.",
+          "de": "Prüfe, ob du die Voraussetzungen für die elektronische Anmeldung erfüllst."
+        },
+        {
+          "en": "Otherwise book an appointment at any citizens' office in the City of Hannover.",
+          "de": "Buche andernfalls einen Termin in einem Bürgeramt der Landeshauptstadt Hannover."
+        },
+        {
+          "en": "Keep the registration confirmation after completing the process.",
+          "de": "Bewahre die Meldebestätigung nach Abschluss auf."
+        }
+      ],
+      "completionCriterion": {
+        "en": "I received my registration confirmation.",
+        "de": "Ich habe meine Meldebestätigung erhalten."
+      },
+      "variants": [
+        {
+          "id": "online",
+          "title": {
+            "en": "Register online",
+            "de": "Online anmelden"
+          },
+          "description": {
+            "en": "For an eligible new main residence. Requires an activated online ID or eID card, BundID, AusweisApp and a compatible smartphone.",
+            "de": "Für eine geeignete neue Hauptwohnung. Benötigt werden Online-Ausweisfunktion oder eID-Karte, BundID, AusweisApp und ein kompatibles Smartphone."
+          },
+          "actionLabel": {
+            "en": "Open Hannover online service",
+            "de": "Hannovers Online-Dienst öffnen"
+          },
+          "url": "https://www.hannover.de/Service/Presse-Medien/Landeshauptstadt-Hannover/Meldungsarchiv-f%C3%BCr-das-Jahr-2025/Wohnsitzanmeldung-in-Hannover-jetzt-online-m%C3%B6glich"
+        },
+        {
+          "id": "citizens_office",
+          "title": {
+            "en": "Visit a citizens' office",
+            "de": "Bürgeramt besuchen"
+          },
+          "description": {
+            "en": "Book an appointment at a citizens' office in the City of Hannover. Keep the booking confirmation if the appointment is later than your deadline.",
+            "de": "Buche einen Termin bei einem Bürgeramt der Landeshauptstadt Hannover. Bewahre die Bestätigung auf, wenn der Termin nach deiner Frist liegt."
+          },
+          "actionLabel": {
+            "en": "Book an appointment",
+            "de": "Termin buchen"
+          },
+          "url": "https://www.hannover.de/Leben-in-der-Region-Hannover/B%C3%BCrger-Service/B%C3%BCrger-Service-in-der-Landeshauptstadt-Hannover/Termine-bei-Beh%C3%B6rden-buchen/Terminvereinbarung-in-den-B%C3%BCrger%C3%A4mtern"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Anmeldungen, Ummeldungen und Abmeldungen",
+          "publisher": "Landeshauptstadt Hannover",
+          "url": "https://www.hannover.de/Leben-in-der-Region-Hannover/Verwaltungen-Kommunen/Die-Verwaltung-der-Landeshauptstadt-Hannover/Dezernate-und-Fachbereiche-der-LHH/Finanzen%2C-Ordnung-und-Feuerwehr/Fachbereich-%C3%96ffentliche-Ordnung/Standesamt-und-Staatsangeh%C3%B6rig%C2%ADkeit/Ausl%C3%A4nderangelegen%C2%ADheiten-und-Staatsangeh%C3%B6rigkeit/Anmeldungen%2C-Ummeldungen-und-Abmeldungen-Residence-registration%2C-change-of-address-and-deregistration",
+          "checkedAt": "2026-09-12"
+        },
+        {
+          "title": "Wohnsitzanmeldung in Hannover jetzt online möglich",
+          "publisher": "Landeshauptstadt Hannover",
+          "url": "https://www.hannover.de/Service/Presse-Medien/Landeshauptstadt-Hannover/Meldungsarchiv-f%C3%BCr-das-Jahr-2025/Wohnsitzanmeldung-in-Hannover-jetzt-online-m%C3%B6glich",
+          "checkedAt": "2026-09-12"
+        },
+        {
+          "title": "Terminvereinbarung in den Bürgerämtern",
+          "publisher": "Landeshauptstadt Hannover",
+          "url": "https://www.hannover.de/Leben-in-der-Region-Hannover/B%C3%BCrger-Service/B%C3%BCrger-Service-in-der-Landeshauptstadt-Hannover/Termine-bei-Beh%C3%B6rden-buchen/Terminvereinbarung-in-den-B%C3%BCrger%C3%A4mtern",
+          "checkedAt": "2026-09-12"
+        }
+      ],
+      "contentStatus": "human_reviewed"
+    },
+    {
+      "id": "confirm_health_insurance",
+      "order": 2,
+      "phase": "first_14_days",
+      "priority": "required",
+      "title": {
+        "en": "Confirm your health insurance",
+        "de": "Krankenversicherung bestätigen"
+      },
+      "summary": {
+        "en": "Make sure you have continuous health-insurance cover in Germany.",
+        "de": "Stelle einen durchgehenden Krankenversicherungsschutz in Deutschland sicher."
+      },
+      "audience": {
+        "citizenshipGroups": ["eu_eea_ch", "non_eu"],
+        "purposes": ["study", "work"]
+      },
+      "readiness": {
+        "type": "always",
+        "dependencyMode": "hard",
+        "blockedLabel": {
+          "en": "Ready",
+          "de": "Bereit"
+        }
+      },
+      "dueRule": {
+        "type": "text_only",
+        "text": {
+          "en": "From your first day in Germany",
+          "de": "Ab deinem ersten Tag in Deutschland"
+        }
+      },
+      "documents": [],
+      "steps": [],
+      "completionCriterion": {
+        "en": "I confirmed that my health-insurance cover is valid.",
+        "de": "Ich habe bestätigt, dass mein Krankenversicherungsschutz gültig ist."
+      },
+      "sources": [
+        {
+          "title": "Health insurance",
+          "publisher": "Make it in Germany",
+          "url": "https://www.make-it-in-germany.com/en/living-in-germany/money-insurance/health-insurance",
+          "checkedAt": "2026-09-12"
+        }
+      ],
+      "contentStatus": "human_reviewed"
+    },
+    {
+      "id": "apply_residence_permit",
+      "order": 3,
+      "phase": "first_90_days",
+      "priority": "required",
+      "title": {
+        "en": "Apply for your residence permit",
+        "de": "Aufenthaltstitel beantragen"
+      },
+      "summary": {
+        "en": "Use Hannover's service portal before your entry visa expires.",
+        "de": "Nutze Hannovers Serviceportal, bevor dein Einreisevisum abläuft."
+      },
+      "audience": {
+        "citizenshipGroups": ["non_eu"],
+        "purposes": ["study", "work"]
+      },
+      "readiness": {
+        "type": "always",
+        "dependencyMode": "hard",
+        "blockedLabel": {
+          "en": "Ready",
+          "de": "Bereit"
+        }
+      },
+      "dueRule": {
+        "type": "text_only",
+        "text": {
+          "en": "Before your entry visa expires",
+          "de": "Bevor dein Einreisevisum abläuft"
+        }
+      },
+      "documents": [],
+      "steps": [],
+      "completionCriterion": {
+        "en": "I submitted my application through the official service portal.",
+        "de": "Ich habe meinen Antrag über das offizielle Serviceportal eingereicht."
+      },
+      "sources": [
+        {
+          "title": "Sachgebiet Willkommensservice",
+          "publisher": "Landeshauptstadt Hannover",
+          "url": "https://www.hannover.de/view/content/600680/full/1/696901",
+          "checkedAt": "2026-09-12"
+        },
+        {
+          "title": "Visas for Germany",
+          "publisher": "Federal Foreign Office",
+          "url": "https://www.auswaertiges-amt.de/en/visa-service/215870-215870",
+          "checkedAt": "2026-09-12"
+        }
+      ],
+      "contentStatus": "human_reviewed"
+    },
+    {
+      "id": "open_bank_account",
+      "order": 4,
+      "phase": "first_14_days",
+      "priority": "recommended",
+      "title": {
+        "en": "Open a bank account",
+        "de": "Bankkonto eröffnen"
+      },
+      "summary": {
+        "en": "Banks commonly request your passport and registration confirmation; requirements vary by bank.",
+        "de": "Banken verlangen häufig Reisepass und Meldebescheinigung; die Anforderungen unterscheiden sich."
+      },
+      "audience": {
+        "citizenshipGroups": ["eu_eea_ch", "non_eu"],
+        "purposes": ["study", "work"]
+      },
+      "readiness": {
+        "type": "after_task",
+        "taskId": "register_address",
+        "dependencyMode": "advisory",
+        "blockedLabel": {
+          "en": "Recommended after registration",
+          "de": "Nach der Anmeldung empfohlen"
+        }
+      },
+      "dueRule": {
+        "type": "none"
+      },
+      "documents": [],
+      "steps": [],
+      "completionCriterion": {
+        "en": "My bank account is active.",
+        "de": "Mein Bankkonto ist aktiv."
+      },
+      "sources": [
+        {
+          "title": "Bank account",
+          "publisher": "Make it in Germany",
+          "url": "https://www.make-it-in-germany.com/en/living-in-germany/money-insurance/bank-account",
+          "checkedAt": "2026-09-12"
+        }
+      ],
+      "contentStatus": "human_reviewed"
+    },
+    {
+      "id": "receive_tax_id",
+      "order": 5,
+      "phase": "first_90_days",
+      "priority": "informational",
+      "title": {
+        "en": "Receive your tax ID",
+        "de": "Steuer-ID erhalten"
+      },
+      "summary": {
+        "en": "After registration, the tax ID is generally assigned and sent by letter.",
+        "de": "Nach der Anmeldung wird die Steuer-ID grundsätzlich vergeben und per Brief versandt."
+      },
+      "audience": {
+        "citizenshipGroups": ["eu_eea_ch", "non_eu"],
+        "purposes": ["study", "work"]
+      },
+      "readiness": {
+        "type": "after_task",
+        "taskId": "register_address",
+        "dependencyMode": "hard",
+        "blockedLabel": {
+          "en": "After registration",
+          "de": "Nach der Anmeldung"
+        }
+      },
+      "dueRule": {
+        "type": "none"
+      },
+      "documents": [],
+      "steps": [],
+      "completionCriterion": {
+        "en": "I received or retrieved my tax ID.",
+        "de": "Ich habe meine Steuer-ID erhalten oder erneut abgefragt."
+      },
+      "sources": [
+        {
+          "title": "Hinweise zur Vergabe der steuerlichen Identifikationsnummer",
+          "publisher": "Bundeszentralamt für Steuern",
+          "url": "https://www.bzst.de/SharedDocs/Downloads/DE/IdNr/hinweis_idnr_gefluechtete_deutsch.pdf?__blob=publicationFile&v=3",
+          "checkedAt": "2026-09-12"
+        }
+      ],
+      "contentStatus": "human_reviewed"
+    },
+    {
+      "id": "check_broadcasting_fee",
+      "order": 6,
+      "phase": "first_90_days",
+      "priority": "required",
+      "title": {
+        "en": "Check the broadcasting fee",
+        "de": "Rundfunkbeitrag prüfen"
+      },
+      "summary": {
+        "en": "One adult normally pays per dwelling. Check whether someone already pays or whether an exemption applies.",
+        "de": "Pro Wohnung zahlt normalerweise eine erwachsene Person. Prüfe, ob bereits jemand zahlt oder eine Befreiung gilt."
+      },
+      "audience": {
+        "citizenshipGroups": ["eu_eea_ch", "non_eu"],
+        "purposes": ["study", "work"]
+      },
+      "readiness": {
+        "type": "after_task",
+        "taskId": "register_address",
+        "dependencyMode": "advisory",
+        "blockedLabel": {
+          "en": "Check after registration",
+          "de": "Nach der Anmeldung prüfen"
+        }
+      },
+      "dueRule": {
+        "type": "none"
+      },
+      "documents": [],
+      "steps": [],
+      "completionCriterion": {
+        "en": "I registered, supplied the existing contribution number, or confirmed an exemption.",
+        "de": "Ich habe mich angemeldet, die vorhandene Beitragsnummer angegeben oder eine Befreiung bestätigt."
+      },
+      "sources": [
+        {
+          "title": "Information in Other Languages",
+          "publisher": "ARD ZDF Deutschlandradio Beitragsservice",
+          "url": "https://www.rundfunkbeitrag.de/welcome",
+          "checkedAt": "2026-09-12"
+        }
+      ],
+      "contentStatus": "human_reviewed"
+    }
+  ]
+}

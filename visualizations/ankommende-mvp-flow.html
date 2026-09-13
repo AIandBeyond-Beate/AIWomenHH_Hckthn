@@ -1,0 +1,662 @@
+<div id="ade-flow" aria-label="Interactive AnkommenDE MVP screen flow">
+  <style>
+    #ade-flow {
+      --ade-page: light-dark(#f4f7f6, #101615);
+      --ade-surface: light-dark(#ffffff, #18201f);
+      --ade-surface-soft: light-dark(#e9f2ef, #24302d);
+      --ade-text: light-dark(#17221f, #eef6f3);
+      --ade-muted: light-dark(#5b6b66, #aebbb7);
+      --ade-border: light-dark(#d5dfdc, #35423e);
+      --ade-accent: light-dark(#075e54, #67d7c6);
+      --ade-accent-ink: light-dark(#ffffff, #0a211d);
+      --ade-urgent: light-dark(#9b3c17, #ffb48f);
+      --ade-urgent-soft: light-dark(#fff0e8, #3a241a);
+      --ade-success: light-dark(#206b43, #76d7a1);
+      --ade-shadow: light-dark(rgba(19, 42, 35, 0.13), rgba(0, 0, 0, 0.32));
+      color-scheme: light dark;
+      color: var(--ade-text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: grid;
+      place-items: start center;
+      width: 100%;
+    }
+
+    #ade-flow[data-tone="blue"] {
+      --ade-surface-soft: light-dark(#eaf1f9, #202d3b);
+      --ade-accent: light-dark(#18558c, #79b8ee);
+      --ade-accent-ink: light-dark(#ffffff, #0a1b2b);
+    }
+
+    #ade-flow * { box-sizing: border-box; }
+
+    #ade-flow .ade-phone {
+      width: min(100%, 430px);
+      background: var(--ade-page);
+      border: 1px solid var(--ade-border);
+      border-radius: 28px;
+      box-shadow: 0 18px 46px var(--ade-shadow);
+      overflow: hidden;
+    }
+
+    #ade-flow .ade-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      background: var(--ade-surface);
+      border-bottom: 1px solid var(--ade-border);
+    }
+
+    #ade-flow[data-density="compact"] .ade-topbar { padding: 13px 16px; }
+
+    #ade-flow .ade-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    #ade-flow .ade-brand-mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 9px;
+      color: var(--ade-accent-ink);
+      background: var(--ade-accent);
+    }
+
+    #ade-flow .ade-place {
+      color: var(--ade-muted);
+      font-size: 12px;
+    }
+
+    #ade-flow .ade-screen {
+      padding: 28px 22px 30px;
+      min-height: 600px;
+      background: var(--ade-page);
+    }
+
+    #ade-flow[data-density="compact"] .ade-screen {
+      padding: 20px 18px 22px;
+      min-height: 540px;
+    }
+
+    #ade-flow h1,
+    #ade-flow h2,
+    #ade-flow h3,
+    #ade-flow p { margin-top: 0; }
+
+    #ade-flow h1 {
+      margin-bottom: 13px;
+      font-size: clamp(27px, 7vw, 38px);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      font-weight: 500;
+    }
+
+    #ade-flow h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 500;
+    }
+
+    #ade-flow h3 {
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 1.3;
+      font-weight: 500;
+    }
+
+    #ade-flow p,
+    #ade-flow label,
+    #ade-flow button,
+    #ade-flow input {
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    #ade-flow .ade-eyebrow {
+      color: var(--ade-accent);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+
+    #ade-flow .ade-lead { color: var(--ade-muted); margin-bottom: 25px; }
+
+    #ade-flow .ade-illustration {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 26px 0 30px;
+      align-items: end;
+    }
+
+    #ade-flow .ade-step-block {
+      display: grid;
+      place-items: center;
+      gap: 7px;
+      min-height: 105px;
+      padding: 14px 8px;
+      text-align: center;
+      background: var(--ade-surface);
+      border: 1px solid var(--ade-border);
+      border-radius: 16px;
+      color: var(--ade-muted);
+      font-size: 12px;
+    }
+
+    #ade-flow .ade-step-block:nth-child(2) { min-height: 132px; }
+    #ade-flow .ade-step-block:nth-child(3) { min-height: 158px; }
+    #ade-flow .ade-step-block i { color: var(--ade-accent); }
+
+    #ade-flow .ade-action-stack { display: grid; gap: 10px; }
+
+    #ade-flow .ade-button {
+      appearance: none;
+      width: 100%;
+      min-height: 46px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--ade-border);
+      background: var(--ade-surface);
+      color: var(--ade-text);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    #ade-flow .ade-button:hover { background: var(--ade-surface-soft); }
+    #ade-flow .ade-button:focus-visible,
+    #ade-flow input:focus-visible { outline: 3px solid var(--ade-accent); outline-offset: 2px; }
+
+    #ade-flow .ade-button-primary {
+      color: var(--ade-accent-ink);
+      background: var(--ade-accent);
+      border-color: transparent;
+    }
+
+    #ade-flow .ade-button-primary:hover { filter: brightness(1.07); background: var(--ade-accent); }
+    #ade-flow .ade-button-inline { width: auto; min-height: 38px; padding: 7px 11px; font-size: 13px; }
+    #ade-flow .ade-button-link { border-color: transparent; background: transparent; color: var(--ade-accent); }
+
+    #ade-flow .ade-trust {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      margin: 17px 0 0;
+      color: var(--ade-muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    #ade-flow .ade-back {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 42px;
+      margin: -8px 0 15px -8px;
+      padding: 7px 8px;
+      border: 0;
+      background: transparent;
+      color: var(--ade-accent);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    #ade-flow .ade-fixed-place {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 12px 13px;
+      margin: 18px 0 22px;
+      border-radius: 12px;
+      color: var(--ade-text);
+      background: var(--ade-surface-soft);
+    }
+
+    #ade-flow fieldset {
+      margin: 0 0 21px;
+      padding: 0;
+      border: 0;
+    }
+
+    #ade-flow legend {
+      margin-bottom: 10px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    #ade-flow .ade-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    #ade-flow .ade-choice {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: 54px;
+      padding: 10px 12px;
+      border: 1px solid var(--ade-border);
+      border-radius: 12px;
+      background: var(--ade-surface);
+      cursor: pointer;
+    }
+
+    #ade-flow .ade-choice:has(input:checked) {
+      border-color: var(--ade-accent);
+      background: var(--ade-surface-soft);
+      box-shadow: inset 0 0 0 1px var(--ade-accent);
+    }
+
+    #ade-flow .ade-choice input { margin: 0 9px 0 0; accent-color: var(--ade-accent); }
+
+    #ade-flow .ade-date-label { display: grid; gap: 8px; font-weight: 500; }
+    #ade-flow .ade-date {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid var(--ade-border);
+      border-radius: 12px;
+      background: var(--ade-surface);
+      color: var(--ade-text);
+    }
+
+    #ade-flow .ade-summary-row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    #ade-flow .ade-summary-row p { color: var(--ade-muted); margin-bottom: 0; font-size: 13px; }
+
+    #ade-flow .ade-alert {
+      display: flex;
+      gap: 10px;
+      align-items: start;
+      padding: 13px;
+      margin-bottom: 17px;
+      border-radius: 13px;
+      color: var(--ade-urgent);
+      background: var(--ade-urgent-soft);
+    }
+
+    #ade-flow .ade-alert p { margin: 0; font-weight: 500; }
+
+    #ade-flow .ade-progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      color: var(--ade-muted);
+      font-size: 13px;
+    }
+
+    #ade-flow .ade-progress-track {
+      height: 7px;
+      margin-bottom: 19px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--ade-border);
+    }
+
+    #ade-flow .ade-progress-value { height: 100%; background: var(--ade-accent); transition: width 180ms ease; }
+
+    #ade-flow .ade-task-list { display: grid; gap: 10px; }
+
+    #ade-flow .ade-task {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 11px;
+      align-items: start;
+      width: 100%;
+      padding: 14px;
+      text-align: left;
+      border: 1px solid var(--ade-border);
+      border-radius: 14px;
+      color: var(--ade-text);
+      background: var(--ade-surface);
+    }
+
+    #ade-flow button.ade-task { cursor: pointer; }
+    #ade-flow button.ade-task:hover { border-color: var(--ade-accent); }
+    #ade-flow .ade-task-index {
+      display: grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: var(--ade-surface-soft);
+      color: var(--ade-accent);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    #ade-flow .ade-task.is-done .ade-task-index { background: var(--ade-success); color: var(--ade-accent-ink); }
+    #ade-flow .ade-task-title { display: block; margin-bottom: 3px; font-weight: 500; }
+    #ade-flow .ade-task-copy { display: block; color: var(--ade-muted); font-size: 12px; }
+    #ade-flow .ade-task-status { color: var(--ade-accent); font-size: 11px; font-weight: 500; text-align: right; }
+    #ade-flow .ade-task-status.is-urgent { color: var(--ade-urgent); }
+
+    #ade-flow .ade-deadline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 18px 0;
+      padding: 13px;
+      border-radius: 13px;
+      color: var(--ade-urgent);
+      background: var(--ade-urgent-soft);
+      font-weight: 500;
+    }
+
+    #ade-flow .ade-section { margin: 24px 0; }
+    #ade-flow .ade-checklist { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    #ade-flow .ade-checklist li { display: flex; align-items: start; gap: 9px; color: var(--ade-muted); }
+    #ade-flow .ade-checklist i { flex: 0 0 auto; color: var(--ade-success); margin-top: 2px; }
+
+    #ade-flow .ade-methods { display: grid; gap: 10px; }
+    #ade-flow .ade-method {
+      padding: 15px;
+      border: 1px solid var(--ade-border);
+      border-radius: 14px;
+      background: var(--ade-surface);
+    }
+
+    #ade-flow .ade-method p { color: var(--ade-muted); font-size: 13px; }
+    #ade-flow .ade-method-note { color: var(--ade-accent) !important; }
+
+    #ade-flow .ade-complete {
+      display: flex;
+      align-items: start;
+      gap: 10px;
+      margin: 23px 0 12px;
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--ade-surface-soft);
+      cursor: pointer;
+    }
+
+    #ade-flow .ade-complete input { margin-top: 3px; accent-color: var(--ade-accent); }
+    #ade-flow .ade-source { margin-top: 21px; color: var(--ade-muted); font-size: 12px; }
+    #ade-flow .ade-success-message { color: var(--ade-success); font-weight: 500; text-align: center; }
+
+    @media (max-width: 420px) {
+      #ade-flow .ade-phone { border-radius: 18px; }
+      #ade-flow .ade-screen { min-height: 560px; padding-inline: 17px; }
+      #ade-flow .ade-choice-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #ade-flow .ade-progress-value { transition: none; }
+    }
+  </style>
+
+  <section class="ade-phone" aria-label="AnkommenDE mobile prototype">
+    <header class="ade-topbar">
+      <span class="ade-brand"><span class="ade-brand-mark"><i data-lucide="route" aria-hidden="true"></i></span>AnkommenDE</span>
+      <span class="ade-place">City of Hannover</span>
+    </header>
+    <main class="ade-screen" id="ade-screen" aria-live="polite"></main>
+  </section>
+
+  <script>
+    (() => {
+      const root = document.getElementById('ade-flow');
+      const screen = document.getElementById('ade-screen');
+      const state = {
+        view: 'welcome',
+        citizenship: 'non_eu',
+        purpose: 'study',
+        moved: 'yes',
+        moveDate: '2026-09-10',
+        registrationDone: false,
+        completionConfirmed: false,
+        tone: 'teal',
+        density: 'comfortable'
+      };
+
+      const icon = (name) => `<i data-lucide="${name}" aria-hidden="true"></i>`;
+
+      function formatDueDate() {
+        if (state.moved !== 'yes' || !state.moveDate) return null;
+        const due = new Date(`${state.moveDate}T12:00:00`);
+        due.setDate(due.getDate() + 14);
+        return {
+          short: new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short' }).format(due),
+          long: new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(due)
+        };
+      }
+
+      function daysSinceMove() {
+        if (!state.moveDate) return '';
+        const demoNow = new Date('2026-09-12T12:00:00');
+        const moved = new Date(`${state.moveDate}T12:00:00`);
+        const days = Math.max(0, Math.round((demoNow - moved) / 86400000));
+        return days === 1 ? 'Moved in 1 day ago' : `Moved in ${days} days ago`;
+      }
+
+      function go(view) {
+        state.view = view;
+        render();
+      }
+
+      function welcomeView() {
+        return `
+          <div class="ade-eyebrow">STARTING IN GERMANY</div>
+          <h1>Your next steps in Hannover, in the right order.</h1>
+          <p class="ade-lead">Answer four questions. Get a personal checklist with deadlines, documents and official sources.</p>
+          <div class="ade-illustration" aria-label="Profile, plan and complete three-step flow">
+            <div class="ade-step-block">${icon('user-round')}<span>Your situation</span></div>
+            <div class="ade-step-block">${icon('list-checks')}<span>Your plan</span></div>
+            <div class="ade-step-block">${icon('circle-check-big')}<span>Your progress</span></div>
+          </div>
+          <div class="ade-action-stack">
+            <button class="ade-button ade-button-primary" type="button" data-action="profile">Create my plan</button>
+            <button class="ade-button" type="button" data-action="demo">Use Maya's demo profile</button>
+          </div>
+          <p class="ade-trust">${icon('shield-check')} No account · No document upload · Not legal advice</p>
+        `;
+      }
+
+      function radioChoice(group, value, label, checked) {
+        return `<label class="ade-choice"><input type="radio" name="${group}" value="${value}" ${checked ? 'checked' : ''}><span>${label}</span></label>`;
+      }
+
+      function profileView() {
+        return `
+          <button class="ade-back" type="button" data-action="welcome">${icon('arrow-left')} Back</button>
+          <h1>Tell us about your move</h1>
+          <p class="ade-lead">We only use these answers to create your checklist.</p>
+          <div class="ade-fixed-place">${icon('map-pin')} <span><strong>Location</strong><br>City of Hannover</span></div>
+          <form id="ade-profile-form">
+            <fieldset>
+              <legend>What is your citizenship status?</legend>
+              <div class="ade-choice-grid">
+                ${radioChoice('citizenship', 'eu', 'EU, EEA or Switzerland', state.citizenship === 'eu')}
+                ${radioChoice('citizenship', 'non_eu', 'Non-EU', state.citizenship === 'non_eu')}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Why are you moving?</legend>
+              <div class="ade-choice-grid">
+                ${radioChoice('purpose', 'study', 'Study', state.purpose === 'study')}
+                ${radioChoice('purpose', 'work', 'Work', state.purpose === 'work')}
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Have you moved into your home in Hannover?</legend>
+              <div class="ade-choice-grid">
+                ${radioChoice('moved', 'yes', 'Yes', state.moved === 'yes')}
+                ${radioChoice('moved', 'no', 'Not yet', state.moved === 'no')}
+              </div>
+            </fieldset>
+            ${state.moved === 'yes' ? `<label class="ade-date-label">When did you move in?<input class="ade-date" name="moveDate" type="date" value="${state.moveDate}" required></label>` : ''}
+            <div style="height:18px"></div>
+            <button class="ade-button ade-button-primary" type="submit">Show my plan</button>
+          </form>
+        `;
+      }
+
+      function taskRow(index, title, copy, status, urgent = false, clickable = false, done = false) {
+        const tag = clickable ? 'button' : 'div';
+        const action = clickable ? ' data-action="task" type="button"' : '';
+        return `<${tag} class="ade-task${done ? ' is-done' : ''}"${action}>
+          <span class="ade-task-index">${done ? icon('check') : index}</span>
+          <span><span class="ade-task-title">${title}</span><span class="ade-task-copy">${copy}</span></span>
+          <span class="ade-task-status${urgent ? ' is-urgent' : ''}">${status}</span>
+        </${tag}>`;
+      }
+
+      function planView() {
+        const isEu = state.citizenship === 'eu';
+        const total = isEu ? 5 : 6;
+        const done = state.registrationDone ? 1 : 0;
+        const due = formatDueDate();
+        const profile = `${isEu ? 'EU/EEA/Swiss' : 'Non-EU'} ${state.purpose === 'study' ? 'student' : 'professional'}`;
+        const registrationStatus = state.registrationDone ? 'Completed' : state.moved === 'yes' ? `Due ${due.short}` : 'Prepare now';
+        const laterStatus = state.registrationDone ? 'Ready' : state.moved === 'yes' ? 'After registration' : 'After you move';
+        return `
+          <div class="ade-summary-row">
+            <div>
+              <div class="ade-eyebrow">YOUR PERSONAL PLAN</div>
+              <h1>Your first steps in Hannover</h1>
+              <p>${profile}${state.moved === 'yes' ? ` · ${daysSinceMove()}` : ' · Moving soon'}</p>
+            </div>
+            <button class="ade-button ade-button-inline ade-button-link" type="button" data-action="profile">Edit profile</button>
+          </div>
+          ${state.registrationDone ? `<div class="ade-alert" style="color:var(--ade-success);background:var(--ade-surface-soft)">${icon('circle-check-big')}<p>Address registration completed. Your next steps are ready.</p></div>` : state.moved === 'yes' ? `<div class="ade-alert">${icon('clock-3')}<p>Register your address by ${due.long.replace(' 2026','')}.</p></div>` : ''}
+          <div class="ade-progress-row"><span>${done} of ${total} completed</span><span>${Math.round(done / total * 100)}%</span></div>
+          <div class="ade-progress-track" role="progressbar" aria-label="Plan progress" aria-valuenow="${done}" aria-valuemin="0" aria-valuemax="${total}"><div class="ade-progress-value" style="width:${done / total * 100}%"></div></div>
+          <div class="ade-task-list">
+            ${taskRow(1, 'Register your address', 'Get your official registration confirmation.', registrationStatus, !state.registrationDone && state.moved === 'yes', true, state.registrationDone)}
+            ${taskRow(2, 'Confirm your health insurance', 'Make sure your cover is valid in Germany.', 'Do now')}
+            ${isEu ? '' : taskRow(3, 'Apply for your residence permit', 'Apply before your entry visa expires.', 'Next')}
+            ${taskRow(isEu ? 3 : 4, 'Open a bank account', 'You may need your registration confirmation.', laterStatus)}
+            ${taskRow(isEu ? 4 : 5, 'Receive your tax ID', 'Usually sent to your registered address.', laterStatus)}
+            ${taskRow(isEu ? 5 : 6, 'Check the broadcasting fee', 'One fee per dwelling; exemptions may apply.', laterStatus)}
+          </div>
+        `;
+      }
+
+      function taskView() {
+        const due = formatDueDate();
+        return `
+          <button class="ade-back" type="button" data-action="plan">${icon('arrow-left')} Back to my plan</button>
+          <div class="ade-eyebrow">${state.registrationDone ? 'COMPLETED' : 'DO THIS FIRST'}</div>
+          <h1>Register your address</h1>
+          ${due ? `<div class="ade-deadline">${icon('calendar-clock')} Complete by ${due.long}</div>` : ''}
+          <p class="ade-lead">Everyone living in Germany must register their address. In Hannover, the citizens' offices—not the immigration office—handle registration.</p>
+
+          <section class="ade-section">
+            <h2>What to bring</h2>
+            <ul class="ade-checklist">
+              <li>${icon('check')}<span>Passport or ID for you and each family member</span></li>
+              <li>${icon('check')}<span>Wohnungsgeberbestätigung</span></li>
+              <li>${icon('check')}<span>Civil-status documents, if applicable</span></li>
+            </ul>
+          </section>
+
+          <section class="ade-section">
+            <h2>Choose how to register</h2>
+            <div class="ade-methods">
+              <article class="ade-method">
+                <h3>${icon('smartphone')} Register online</h3>
+                <p>For an eligible new main residence. You need an activated online ID or eID card, BundID, the AusweisApp and a compatible smartphone.</p>
+                <button class="ade-button ade-button-inline" type="button">Open Hannover online service</button>
+              </article>
+              <article class="ade-method">
+                <h3>${icon('building-2')} Visit a citizens' office</h3>
+                <p>You can use any citizens' office in the City of Hannover. Book an appointment online.</p>
+                <p class="ade-method-note">A later appointment is okay: keep the booking confirmation as proof that you met the deadline.</p>
+                <button class="ade-button ade-button-inline" type="button">Book an appointment</button>
+              </article>
+            </div>
+          </section>
+
+          <label class="ade-complete"><input id="ade-confirm" type="checkbox" ${state.completionConfirmed || state.registrationDone ? 'checked' : ''}><span>I received my registration confirmation.</span></label>
+          <button class="ade-button ade-button-primary" id="ade-complete-button" type="button" ${state.completionConfirmed || state.registrationDone ? '' : 'disabled'}>${state.registrationDone ? 'Completed' : 'Mark as completed'}</button>
+          ${state.registrationDone ? '<p class="ade-success-message">Your next steps are ready.</p>' : ''}
+          <p class="ade-source">Official Hannover sources · Checked 12 Sep 2026</p>
+        `;
+      }
+
+      function attachEvents() {
+        screen.querySelectorAll('[data-action]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const action = button.dataset.action;
+            if (action === 'demo') {
+              Object.assign(state, { citizenship: 'non_eu', purpose: 'study', moved: 'yes', moveDate: '2026-09-10', registrationDone: false, completionConfirmed: false });
+              go('plan');
+            } else if (action === 'task') {
+              go('task');
+            } else {
+              go(action);
+            }
+          });
+        });
+
+        const form = screen.querySelector('#ade-profile-form');
+        if (form) {
+          form.querySelectorAll('input[type="radio"]').forEach((input) => {
+            input.addEventListener('change', () => {
+              state[input.name] = input.value;
+              if (input.name === 'moved') render();
+            });
+          });
+          form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const values = new FormData(form);
+            state.citizenship = values.get('citizenship');
+            state.purpose = values.get('purpose');
+            state.moved = values.get('moved');
+            state.moveDate = values.get('moveDate') || '';
+            go('plan');
+          });
+        }
+
+        const confirm = screen.querySelector('#ade-confirm');
+        const complete = screen.querySelector('#ade-complete-button');
+        if (confirm && complete) {
+          confirm.addEventListener('change', () => {
+            state.completionConfirmed = confirm.checked;
+            complete.disabled = !confirm.checked;
+          });
+          complete.addEventListener('click', () => {
+            if (!complete.disabled) {
+              state.registrationDone = true;
+              state.completionConfirmed = true;
+              go('plan');
+            }
+          });
+        }
+      }
+
+      function render() {
+        root.dataset.tone = state.tone;
+        root.dataset.density = state.density;
+        screen.innerHTML = state.view === 'welcome' ? welcomeView() : state.view === 'profile' ? profileView() : state.view === 'task' ? taskView() : planView();
+        attachEvents();
+        if (globalThis.lucide) globalThis.lucide.createIcons({ attrs: { width: 17, height: 17 } });
+      }
+
+      render();
+
+      if (globalThis.Tweak) {
+        const tweak = new Tweak({ container: root, onChange: render });
+        tweak.addSelect(state, 'tone', { label: 'Visual tone', options: [{ label: 'Calm teal', value: 'teal' }, { label: 'Trust blue', value: 'blue' }], reference: 'product.tone' });
+        tweak.addSelect(state, 'density', { label: 'Content density', options: [{ label: 'Comfortable', value: 'comfortable' }, { label: 'Compact', value: 'compact' }], reference: 'product.density' });
+      }
+    })();
+  </script>
+</div>
