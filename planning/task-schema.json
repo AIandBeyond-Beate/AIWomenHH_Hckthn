@@ -200,6 +200,7 @@
               "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
               "title": { "$ref": "#/$defs/localizedText" },
               "description": { "$ref": "#/$defs/localizedText" },
+              "note": { "$ref": "#/$defs/localizedText" },
               "actionLabel": { "$ref": "#/$defs/localizedText" },
               "url": { "type": "string", "format": "uri", "pattern": "^https://" }
             }

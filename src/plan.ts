@@ -19,6 +19,7 @@ export interface TaskVariant {
   id: string;
   title: LocalizedText;
   description: LocalizedText;
+  note?: LocalizedText;
   actionLabel: LocalizedText;
   url: string;
 }

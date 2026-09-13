@@ -511,6 +511,17 @@ h1 {
   line-height: 1.5;
 }
 
+.route-card .language-hint {
+  flex: none;
+  margin-top: -0.2rem;
+  padding: 0.7rem 0.75rem;
+  border-left: 3px solid #8bd9ce;
+  border-radius: 0.35rem;
+  color: #c9d6d2;
+  background: #20312c;
+  font-size: 0.78rem;
+}
+
 .external-link {
   align-self: flex-start;
   color: #8bd9ce;

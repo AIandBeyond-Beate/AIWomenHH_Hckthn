@@ -124,6 +124,10 @@
             "en": "Book an appointment at a citizens' office in the City of Hannover. Keep the booking confirmation if the appointment is later than your deadline.",
             "de": "Buche einen Termin bei einem Bürgeramt der Landeshauptstadt Hannover. Bewahre die Bestätigung auf, wenn der Termin nach deiner Frist liegt."
           },
+          "note": {
+            "en": "Language tip: This page opens in German. At the top, select ‘Sprache’, then ‘English’.",
+            "de": "Sprachhinweis: Die Seite öffnet auf Deutsch. Wähle oben ‘Sprache’ und dann ‘English’."
+          },
           "actionLabel": {
             "en": "Book an appointment",
             "de": "Termin buchen"

@@ -286,6 +286,9 @@ function App() {
                     </span>
                     <h3>{variant.title.en}</h3>
                     <p>{variant.description.en}</p>
+                    {variant.note && (
+                      <p className="language-hint">{variant.note.en}</p>
+                    )}
                     <a
                       className="external-link"
                       href={variant.url}
