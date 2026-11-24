@@ -32,6 +32,17 @@ function App() {
   const completedCount = completedTaskIds.size;
   const registrationCompleted = completedTaskIds.has("register_address");
 
+  const [confirmReset, setConfirmReset] = useState(false);
+
+  function resetAll() {
+    setCompletedTaskIds(new Set());
+    setCompletionConfirmed(false);
+    setShowSuccess(false);
+    setConfirmReset(false);
+    setView("welcome");
+    window.scrollTo(0, 0);
+  }
+
   function openPlan() {
     setShowSuccess(false);
     setView("plan");
@@ -73,8 +84,38 @@ function App() {
           </span>
           <span>AnkommenDE</span>
         </a>
-        <span className="scope">City of Hannover</span>
+        {view === "welcome" ? (
+          <span className="scope">City of Hannover</span>
+        ) : (
+          <button
+            className="reset-button"
+            type="button"
+            onClick={() => setConfirmReset(true)}
+          >
+            ↺ Reset
+          </button>
+        )}
       </header>
+
+      {confirmReset && (
+        <div className="reset-confirm" role="alertdialog" aria-labelledby="reset-title">
+          <p id="reset-title">
+            <strong>Start over?</strong> All your progress will be deleted.
+          </p>
+          <div className="reset-actions">
+            <button className="reset-yes" type="button" onClick={resetAll}>
+              Yes, reset
+            </button>
+            <button
+              className="reset-no"
+              type="button"
+              onClick={() => setConfirmReset(false)}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
       <main id="top">
         {view === "welcome" && (

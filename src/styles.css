@@ -629,3 +629,11 @@ h1 {
     transform: translateY(-1px);
   }
 }
+
+.reset-button,.reset-yes,.reset-no{font:inherit;cursor:pointer;border-radius:999px;padding:.4rem .9rem;font-size:.875rem}
+.reset-button{background:transparent;color:inherit;border:1px solid currentColor;opacity:.85}
+.reset-confirm{margin:.75rem 1rem 0;padding:1rem;border:1px solid #f0b36b;border-radius:14px;background:rgba(240,179,107,.12)}
+.reset-confirm p{margin:0 0 .75rem}
+.reset-actions{display:flex;gap:.5rem}
+.reset-yes{background:#f0b36b;color:#101a18;border:0;font-weight:600}
+.reset-no{background:transparent;color:inherit;border:1px solid currentColor}
