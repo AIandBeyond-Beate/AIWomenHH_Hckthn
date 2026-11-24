@@ -7,8 +7,16 @@ import {
   type DemoProfile,
   type Task,
 } from "./plan";
+import {
+  extractFacts,
+  isReadable,
+  readPdfText,
+  receivedDate,
+  submitByDate,
+  type LetterFacts,
+} from "./letter";
 
-type View = "welcome" | "plan" | "task";
+type View = "welcome" | "intake" | "letter" | "plan" | "task";
 
 const tasks = catalog.tasks as Task[];
 const maya = catalog.demoProfiles.find(
@@ -33,12 +41,65 @@ function App() {
   const registrationCompleted = completedTaskIds.has("register_address");
 
   const [confirmReset, setConfirmReset] = useState(false);
+  const [question, setQuestion] = useState("");
+  const [facts, setFacts] = useState<LetterFacts | null>(null);
+  const [letterDone, setLetterDone] = useState<Set<number>>(() => new Set());
+  const [reading, setReading] = useState(false);
+  const [readError, setReadError] = useState<string | null>(null);
+
+  async function processPdf(data: ArrayBuffer) {
+    setReading(true);
+    setReadError(null);
+    try {
+      const result = extractFacts(await readPdfText(data));
+      if (!isReadable(result)) {
+        setReadError(
+          "We could not find a deadline or a document list in this PDF. Try the demo letter.",
+        );
+        return;
+      }
+      setFacts(result);
+      setLetterDone(new Set());
+      setView("letter");
+      window.scrollTo(0, 0);
+    } catch {
+      setReadError("This file could not be read. Please use a text-based PDF.");
+    } finally {
+      setReading(false);
+    }
+  }
+
+  async function useDemoLetter() {
+    const response = await fetch(
+      `${import.meta.env.BASE_URL}demo-behoerdenbrief.pdf`,
+    );
+    await processPdf(await response.arrayBuffer());
+  }
+
+  async function onFileChosen(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (file) await processPdf(await file.arrayBuffer());
+  }
+
+  function toggleLetterItem(index: number) {
+    setLetterDone((current) => {
+      const next = new Set(current);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
+  }
 
   function resetAll() {
     setCompletedTaskIds(new Set());
     setCompletionConfirmed(false);
     setShowSuccess(false);
     setConfirmReset(false);
+    setQuestion("");
+    setFacts(null);
+    setLetterDone(new Set());
+    setReadError(null);
     setView("welcome");
     window.scrollTo(0, 0);
   }
@@ -142,7 +203,11 @@ function App() {
               <span className="task-count">6 steps</span>
             </article>
 
-            <button className="primary-button" type="button" onClick={openPlan}>
+            <button
+              className="primary-button"
+              type="button"
+              onClick={() => setView("intake")}
+            >
               Use Maya’s demo profile
               <span aria-hidden="true">→</span>
             </button>
@@ -150,6 +215,204 @@ function App() {
             <p className="trust-line">
               <span aria-hidden="true">✓</span> No account · No document upload ·
               Not legal advice
+            </p>
+          </section>
+        )}
+
+        {view === "intake" && (
+          <section className="intake" aria-labelledby="intake-title">
+            <button
+              className="text-button"
+              type="button"
+              onClick={() => setView("welcome")}
+            >
+              ← Back
+            </button>
+            <p className="eyebrow">MAYA’S DEMO PROFILE</p>
+            <h1 id="intake-title">What do you need help with?</h1>
+            <p className="lead">
+              Upload a letter from an office. We read it on your device and turn
+              it into a checklist.
+            </p>
+
+            <label className="field-label" htmlFor="question">
+              Your question (optional)
+            </label>
+            <textarea
+              id="question"
+              className="text-area"
+              rows={3}
+              value={question}
+              placeholder="e.g. What do I have to do now, and by when?"
+              onChange={(event) => setQuestion(event.target.value)}
+            />
+
+            <button
+              className="primary-button"
+              type="button"
+              disabled={reading}
+              onClick={useDemoLetter}
+            >
+              {reading ? "Reading letter…" : "Use the demo letter (PDF)"}
+              <span aria-hidden="true">→</span>
+            </button>
+            <label className="secondary-button">
+              Or choose your own PDF
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={onFileChosen}
+                hidden
+              />
+            </label>
+            {readError && (
+              <p className="error-text" role="alert">
+                {readError}
+              </p>
+            )}
+            <p className="trust-line">
+              <span aria-hidden="true">✓</span> Your file stays on this device ·
+              No account · Not legal advice
+            </p>
+          </section>
+        )}
+
+        {view === "letter" && facts && (
+          <section className="letter" aria-labelledby="letter-title">
+            <button
+              className="text-button"
+              type="button"
+              onClick={() => setView("intake")}
+            >
+              ← Back
+            </button>
+            <p className="eyebrow">WHAT YOUR LETTER SAYS</p>
+            <h1 id="letter-title">You have to send documents. Time is limited.</h1>
+            {question.trim() && (
+              <p className="question-echo">
+                <strong>Your question:</strong> “{question.trim()}”
+              </p>
+            )}
+
+            {(() => {
+              const due = submitByDate(facts);
+              return (
+                due && (
+                  <div className="deadline" role="status">
+                    <span className="deadline-icon" aria-hidden="true">!</span>
+                    <div>
+                      <strong>Submit by {formatDate(due)}</strong>
+                      <span>
+                        {facts.deadlineDays} days after receipt. Receipt counts
+                        from{" "}
+                        {facts.letterDate &&
+                          formatDate(receivedDate(facts.letterDate))}
+                        .
+                      </span>
+                    </div>
+                  </div>
+                )
+              );
+            })()}
+
+            <dl className="fact-list">
+              {facts.recipient && (
+                <>
+                  <dt>Addressed to</dt>
+                  <dd>{facts.recipient}</dd>
+                </>
+              )}
+              {facts.address && (
+                <>
+                  <dt>Address</dt>
+                  <dd>{facts.address}</dd>
+                </>
+              )}
+              {facts.fileNumber && (
+                <>
+                  <dt>File number</dt>
+                  <dd>{facts.fileNumber}</dd>
+                </>
+              )}
+              {facts.letterDate && (
+                <>
+                  <dt>Letter date</dt>
+                  <dd>{formatDate(facts.letterDate)}</dd>
+                </>
+              )}
+              {facts.moveInDate && (
+                <>
+                  <dt>Move-in date (per office)</dt>
+                  <dd>{formatDate(facts.moveInDate)}</dd>
+                </>
+              )}
+            </dl>
+
+            <p className="section-kicker">WHY YOU GOT THIS LETTER</p>
+            <p>
+              Your address registration could not be completed. The landlord
+              confirmation is missing a signature and the move-in date.
+            </p>
+
+            <p className="section-kicker">YOUR CHECKLIST</p>
+            <ul className="letter-checklist">
+              {facts.documents.map((doc, index) => (
+                <li key={doc.de}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={letterDone.has(index)}
+                      onChange={() => toggleLetterItem(index)}
+                    />
+                    <span>
+                      <strong>{doc.en}</strong>
+                      <small>Original wording: {doc.de}</small>
+                    </span>
+                  </label>
+                </li>
+              ))}
+              {facts.appointmentOnlineOnly && (
+                <li>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={letterDone.has(facts.documents.length)}
+                      onChange={() => toggleLetterItem(facts.documents.length)}
+                    />
+                    <span>
+                      <strong>Book an appointment in the online portal</strong>
+                      <small>
+                        No phone booking. If no slots show, try again later.
+                      </small>
+                    </span>
+                  </label>
+                </li>
+              )}
+            </ul>
+
+            <p className="section-kicker">GOOD TO KNOW</p>
+            <ul className="check-list">
+              {facts.noEmail && (
+                <li>Plain email is not accepted. Bring the originals in person.</li>
+              )}
+              {facts.fineMax && (
+                <li>
+                  A fine of up to {facts.fineMax} is possible for late
+                  registration. You may answer in writing, but you do not have to.
+                </li>
+              )}
+              <li>
+                Registration passes your data to the broadcasting fee office
+                (Beitragsservice).
+              </li>
+            </ul>
+
+            <button className="primary-button" type="button" onClick={openPlan}>
+              See my full Hannover plan <span aria-hidden="true">→</span>
+            </button>
+            <p className="source-note">
+              Read from your PDF on this device · Check details with the office
+              · Not legal advice
             </p>
           </section>
         )}
