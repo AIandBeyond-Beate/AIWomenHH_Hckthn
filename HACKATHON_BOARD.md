@@ -104,7 +104,7 @@ Nur wenn Gate 4 bereits erfüllt ist, darf genau **ein** Bonus gewählt werden:
 - [ ] finalen Deployment-Smoke-Test durchführen.
 - [ ] Pitch ein letztes Mal proben.
 
-Keine neue Zielgruppe, Sprache, Karte, Dokumentenanalyse, Avatar- oder Chatfunktion beginnen.
+Keine neue Zielgruppe, Sprache, Karte, Avatar- oder Chatfunktion beginnen. Das lokale Auslesen des Demo-Briefs ist umgesetzt (MVP_SPEC 6a).
 
 ## Solo-Streichliste
 

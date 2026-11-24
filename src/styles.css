@@ -248,11 +248,11 @@ h1 {
 }
 
 .deadline strong,
-.deadline span {
+.deadline div span {
   display: block;
 }
 
-.deadline span {
+.deadline div span {
   margin-top: 0.2rem;
   color: #d9aa90;
   font-size: 0.82rem;
@@ -637,3 +637,16 @@ h1 {
 .reset-actions{display:flex;gap:.5rem}
 .reset-yes{background:#f0b36b;color:#101a18;border:0;font-weight:600}
 .reset-no{background:transparent;color:inherit;border:1px solid currentColor}
+
+.field-label{display:block;margin:1.25rem 0 .4rem;font-weight:600}
+.text-area{width:100%;box-sizing:border-box;padding:.8rem;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.04);color:inherit;font:inherit;resize:vertical;margin-bottom:1rem}
+.secondary-button{display:block;text-align:center;margin-top:.75rem;padding:.9rem;border:1px solid currentColor;border-radius:999px;cursor:pointer}
+.error-text{color:#f0b36b;margin-top:.75rem}
+.question-echo{padding:.8rem 1rem;border-left:3px solid #8ad9cb;background:rgba(138,217,203,.08);border-radius:8px}
+.fact-list{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1rem;margin:1.25rem 0}
+.fact-list dt{opacity:.7}.fact-list dd{margin:0;font-weight:600}
+.letter-checklist{list-style:none;padding:0;margin:.5rem 0 1.5rem;display:grid;gap:.6rem}
+.letter-checklist li{border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:.9rem}
+.letter-checklist label{display:flex;gap:.75rem;align-items:flex-start;cursor:pointer}
+.letter-checklist input{margin-top:.25rem;width:1.2rem;height:1.2rem}
+.letter-checklist small{display:block;opacity:.65;margin-top:.25rem}
