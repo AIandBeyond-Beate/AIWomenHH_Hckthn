@@ -45,7 +45,7 @@ Die MVP-Oberfläche ist Englisch. Deutsch ist ein Bonus nach vollständiger Abna
 - Body: `Answer four questions. Get a personal checklist with deadlines, documents and official sources.`
 - Primary action: `Create my plan`
 - Secondary action: `Use Maya's demo profile`
-- Trust line: `No account · No document upload · Not legal advice`
+- Trust line: `No account · Documents stay on your device · Not legal advice`
 
 **Interaktion:**
 
@@ -247,6 +247,18 @@ Im MVP ist `City of Hannover` eine feste, sichtbare Konstante. Die App behauptet
 5. **Fortschritt, 15 Sekunden:** Aufgabe abschließen und nächsten Schritt freischalten.
 6. **Vision, 10 Sekunden:** Weitere Orte, Lebenslagen und sichere Dokumentenunterstützung.
 
+## 6a. Demo-Erweiterung: Behördenbrief auslesen (Mayas Demo-Profil)
+
+Ausnahme vom Scope-Freeze, nur für das Demo-Profil:
+
+- `Use Maya's demo profile` startet leer (0/6), ohne fertigen Plan.
+- Startseite „What do you need help with?": optionales Fragefeld (wird nur angezeigt, nicht beantwortet) und Upload eines PDFs.
+- Das vorbereitete Demo-PDF (`public/demo-behoerdenbrief.pdf`, frei erfundener Behördenbrief) wird **im Browser** mit pdf.js gelesen. Kein Server, kein KI-Dienst, keine Datenübertragung.
+- Ergebnis: Eckdaten, berechnete Frist, Checkliste der geforderten Unterlagen, Hinweise. Von dort führt ein Button zum bestehenden 6-Schritte-Plan.
+- Das Auslesen ist regelbasiert auf dieses Briefformat zugeschnitten; eigene PDFs müssen Text enthalten (keine Scans) und ein ähnliches Format haben.
+- `Reset` löscht Frage, ausgelesenen Brief und alle Haken.
+- Weiterhin **nicht** enthalten: echte Antworten auf die Frage (bräuchte KI-Dienst), OCR für Scans, Speicherung.
+
 ## 7. Scope-Freeze
 
-Bis der Golden Path alle Abnahmekriterien erfüllt, werden keine Kartenansicht, Chatfunktion, Terminabfrage, Dokumentenanalyse, Nutzerkonten, Animationen oder zusätzlichen Zielgruppen begonnen.
+Bis der Golden Path alle Abnahmekriterien erfüllt, werden keine Kartenansicht, Chatfunktion, Terminabfrage, Nutzerkonten, Animationen oder zusätzlichen Zielgruppen begonnen.

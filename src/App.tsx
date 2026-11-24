@@ -213,8 +213,8 @@ function App() {
             </button>
 
             <p className="trust-line">
-              <span aria-hidden="true">✓</span> No account · No document upload ·
-              Not legal advice
+              <span aria-hidden="true">✓</span> No account · Documents stay on your
+              device · Not legal advice
             </p>
           </section>
         )}

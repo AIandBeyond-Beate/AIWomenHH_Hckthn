@@ -125,7 +125,7 @@ Enthalten:
 Nicht enthalten:
 
 - Registrierung/Login
-- Upload oder Analyse persönlicher Dokumente
+- Upload persönlicher Dokumente an einen Server oder KI-Dienst (Ausnahme: Demo-Brief wird nur lokal im Browser gelesen, siehe MVP_SPEC 6a)
 - automatische Terminbuchung
 - verbindliche Rechtsberatung oder vollständige Prüfung eines Einzelfalls
 - flächendeckende kommunale Daten

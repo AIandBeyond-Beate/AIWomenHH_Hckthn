@@ -248,11 +248,11 @@ h1 {
 }
 
 .deadline strong,
-.deadline span {
+.deadline div span {
   display: block;
 }
 
-.deadline span {
+.deadline div span {
   margin-top: 0.2rem;
   color: #d9aa90;
   font-size: 0.82rem;
